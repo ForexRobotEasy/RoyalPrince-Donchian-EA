@@ -1,0 +1,74 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                           RoyalPrince Donchian EA |
+//|                                      Developed by Forex Robot Easy Team |
+//|                                                  forexroboteasy.com |
+//+------------------------------------------------------------------+
+
+// Fixed Lots
+double fixedLots = 0.1; // Default value
+
+// Hard Take Profit and Hard Stop Loss
+bool useHardTP = true; // Default value
+bool useHardSL = true; // Default value
+double hardTP = 100; // Default value in points
+double hardSL = 50; // Default value in points
+
+// Dynamic Donchian Channel Indicator
+double openTickPrice; // Variable to store the open tick price
+
+//+------------------------------------------------------------------+
+//| Custom indicator initialization function                         |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+  // Indicator settings and initialization code
+  return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Expert Advisor start function                                      |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+  openTickPrice = iOpen(_Symbol, PERIOD_CURRENT, 0); // Get the open tick price
+  
+  // Trading logic goes here
+  
+  if (useHardTP) {
+    double takeProfit = openTickPrice + hardTP * _Point; // Calculate take profit level
+    // Place take profit order
+    if (!OrderSelect(_Ticket, SELECT_BY_TICKET)) {
+      OrderSend(_Symbol, OP_TP, takeProfit, 0, 0, 0, 0, 'Take Profit Order', 0, 0, Green);
+    }
+  }
+
+  if (useHardSL) {
+    double stopLoss = openTickPrice - hardSL * _Point; // Calculate stop loss level
+    // Place stop loss order
+    if (!OrderSelect(_Ticket, SELECT_BY_TICKET)) {
+      OrderSend(_Symbol, OP_SL, stopLoss, 0, 0, 0, 0, 'Stop Loss Order', 0, 0, Red);
+    }
+  }
+}
+
+//+------------------------------------------------------------------+
+//| Expert Advisor stop function                                      |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+  // Cleanup code and resource deallocation
+}
+
+//+------------------------------------------------------------------+
+//| User guide or documentation                                       |
+//+------------------------------------------------------------------+
+// Please refer to the user guide or documentation provided by Forex Robot Easy Team for detailed instructions on how to use the RoyalPrince Donchian EA.
+// The user guide will cover topics such as setting fixed lots, hard take profit and stop loss, and utilizing the dynamic Donchian channel indicator.
+
+//+------------------------------------------------------------------+
+//| Test plan and test cases                                          |
+//+------------------------------------------------------------------+
+// Please refer to the test plan and test cases provided by Forex Robot Easy Team for testing the functionality and reliability of the RoyalPrince Donchian EA.
+// The test plan will outline the steps to be followed and the expected results for each test case.
+
